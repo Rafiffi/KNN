@@ -1,0 +1,31 @@
+import numpy as np
+from collections import Counter
+
+def euclidean_distance(x1, x2):
+    return np.sqrt(np.sum((x1 - x2) ** 2))
+
+class KNN:
+
+    def __init__(self, k=3):
+        self.k = k
+
+    def fit(self, X,y): # zbiór uczący
+        self.X_train = X
+        self.y_train = y
+
+    def predict(self, X): # prognozowanie
+        predicted_labels = [self._predict(x) for x in X]  # dla każdego x w X przeprować prognozę
+        return np.array(predicted_labels)
+
+    def _predict(self,x):
+        # Obliczanie dystansu
+        distances = [euclidean_distance(x,x_train) for x_train in self.X_train] # liczymy odległość dla wszsytkich z testowego
+        # k nearest samples, labels
+        k_indices = np.argsort(distances)[:self.k] # dla k odległości bierzemy pozycje (indykator) https://numpy.org/doc/stable/reference/generated/numpy.argsort.html
+        k_nearest_labels = [self.y_train[i] for i in k_indices] # y odpowiadające x dla 3
+        # majority vote, jaki tym wygrał
+        most_common = Counter(k_nearest_labels).most_common(1) # 1 najcześciej występujęcy y np. [0,2,2] wtedy [2,2] czyli 2 jest 2 razy
+        return most_common[0][0] # czyli wybieramy najczestrzy
+
+
+
