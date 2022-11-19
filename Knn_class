@@ -6,7 +6,7 @@ def euclidean_distance(x1, x2): # definiujemy odległość euklidesa
 
 class KNN:
 
-    def __init__(self, k=3):
+    def __init__(self, k=3): # wartość default k = 3 
         self.k = k
 
     def fit(self, X,y): # zbiór uczący
