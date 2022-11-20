@@ -31,3 +31,5 @@ clf.fit(X_train, y_train)
 predictions = clf.predict(X_test)
 print("KNN classification accuracy", accuracy(y_test, predictions))
 
+error = np.dstack((y_test, predictions, [y_test-predictions]) )
+print(error) 
